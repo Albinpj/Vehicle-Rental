@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">Registration Date</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+                          <field name="first_contract_date" position="attributes">
+                       <attribute name="invisible">True</attribute>
+                   </field>
+            <field name="first_contract_date" position="before">
+                <field name="registration_date"/>
+            </field>
+        </field>
+    </record>
+    </data>
+</odoo>

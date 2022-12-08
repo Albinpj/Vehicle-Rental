@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="hr_menu_configuration"
+                  name="Rental"
+                  sequence="1"/>
+        <menuitem id="hr_sub_menu"
+                  name="Rent Vehicle"
+                  parent="hr_menu_configuration"
+                  sequence="1"/>
+        <menuitem id="hr_report_menu"
+                  name="Report"
+                  parent="hr_menu_configuration"
+                  sequence="3"/>
+    </data>
+</odoo>

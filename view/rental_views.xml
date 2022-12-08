@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_vehicle_rental_tree" model="ir.ui.view">
+            <field name="name">vehicle.rental.tree</field>
+            <field name="model">vehicle.rental</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="vehicle_id"/>
+                    <field name="brand"/>
+                    <field name="state"/>
+                    <field name="model_year" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_vehicle_rental_form" model="ir.ui.view">
+            <field name="name">vehicle.rental.form</field>
+            <field name="model">vehicle.rental</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="vehicle_request" type="object" icon="fa-car" class="oe_stat_button">
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+
+                        <group>
+                            <group>
+                                <field name="vehicle_id"/>
+                                <field name="registration_date"/>
+                                <field name="brand"/>
+                                <field name="model_year"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="warning"/>
+                                <div role="alert" class="alert alert-danger"
+                                     style="height:40px,width:10px,margin-bottom=1px;"
+                                     attrs="{'invisible' :[('warning', '=', False)]}">
+                                    This Vehicle Is Unavailable
+                                </div>
+                                <field name="late"/>
+                                <div role="alert" class="alert alert-warning"
+                                     style="height:40px,width:10px,margin-bottom=1px;"
+                                     attrs="{'invisible' :[('late', '=', False)]}">
+                                    This Vehicle Is Late
+                                </div>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Rent Request">
+                                <field name="rental_request_ids">
+                                    <tree>
+                                        <field name="customer_id"/>
+                                        <field name="vehicle_id"/>
+                                        <field name="state"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="sequence"/>
+                                            <field name="customer_id"/>
+                                            <field name="request_date"/>
+                                            <field name="vehicle_id"/>
+                                            <field name="from_date"/>
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="to_date"/>
+                                            <field name="period"/>
+                                            <field name="state"/>
+                                            <field name="period_type"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Rent Charge">
+                                <field name="rental_charges_ids">
+                                    <tree editable="bottom">
+                                        <field name="time"/>
+                                        <field name="amount"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_vehicle_rental_search" model="ir.ui.view">
+            <field name="name">vehicle.rental.search</field>
+            <field name="model">vehicle.rental</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="vehicle_id"/>
+                    <field name="brand"/>
+                    <separator/>
+                    <filter string="Available" name="available" domain="[('state', '=', 'available')]"/>
+                    <filter string="Not Available" name="not_available" domain="[('state', '=', 'not_available')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Brand" name="brand" context="{'group_by':'brand', 'residual_visible':True}"/>
+                        <filter string="Model Year" name="model_year"
+                                context="{'group_by':'model_year', 'residual_visible':True}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_rental_kanban" model="ir.ui.view">
+            <field name="name">vehicle.rental.kanban</field>
+            <field name="model">vehicle.rental</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="vehicle_id"/>
+                    <field name="brand"/>
+                    <field name="state"/>
+                    <field name="image"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <field name="image" widget="image"/>
+
+
+                                <div>
+                                    <ul>
+
+                                        <li>
+                                            Name :
+                                            <field name="name"/>
+
+                                        </li>
+                                        <li>
+                                            Vehicle Id :
+                                            <field name="vehicle_id"/>
+
+                                        </li>
+                                        <li>
+                                            Brand :
+                                            <field name="brand"/>
+
+                                        </li>
+                                        <li>
+                                            State :
+                                            <field name="state"/>
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

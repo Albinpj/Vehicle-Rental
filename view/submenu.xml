@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="test_model_action" model="ir.actions.act_window">
+            <field name="name">Rent Vehicle</field>
+            <field name="res_model">vehicle.rental</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="context">{'search_default_available': 1}</field>
+
+        </record>
+        <menuitem id="hr_sub_configuration"
+                  name="Rent Vehicle"
+                  parent="hr_menu_configuration"
+                  action="test_model_action"
+                  sequence="2"/>
+        <record id="test_model_action_request" model="ir.actions.act_window">
+            <field name="name">Rent Request</field>
+            <field name="res_model">vehicle.request</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem id="hr_sub_menu"
+                  name="Rent Request"
+                  parent="hr_menu_configuration"
+                  action="test_model_action_request"
+                  sequence="1"/>
+        <record id="test_model_action_report" model="ir.actions.act_window">
+            <field name="name">Vehicle Report</field>
+            <field name="res_model">create.report.wizard</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem id="hr_vehicle_report_menu"
+                  name="Vehicle Rent Report "
+                  parent="hr_report_menu"
+                  action="action_create_report"
+                  sequence="3"/>
+    </data>
+</odoo>

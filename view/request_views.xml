@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_vehicle_request_form" model="ir.ui.view">
+            <field name="name">vehicle.request.form</field>
+            <field name="model">vehicle.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_in_confirm" groups="vechile_rental.vehicle_rental_manager_access"
+                                class="oe_highlight" states="draft" string="Confirm"
+                                type="object" help="Move Appointment to Confirm state"/>
+                        <button name="button_in_returned" class="oe_highlight" states="confirm" string="Returned"
+                                type="object" help="Move Appointment to Returned state"/>
+                        <button name="action_create_invoice" class="oe_highlight" states="confirm"
+                                string="Create Invoice"
+                                type="object" help="Create Invoice For The Request"/>
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoice" type="object" class="oe_stat_button"
+                                    icon="fa-pencil-square-o" string="Invoice">
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Paid"
+                                attrs="{'invisible': [('paid', '!=', True)]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="sequence"/>
+                            </h1>
+                        </div>
+                        <group>
+
+                            <group>
+
+                                <field name="customer_id" widget="res_partner_many2one"
+                                       context="{'res_partner_search_mode': 'customer_id', 'show_address': 1, 'show_vat': True}"
+                                       options="{&quot;always_reload&quot;: True}"/>
+                                <field name="vehicle_id"/>
+                                <field name="period_type"/>
+                                <field name="request_date"/>
+                                <field name="from_date"/>
+                                <field name="to_date"/>
+                                <field name="period"/>
+                                <field name="paid" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="rent_amount"/>
+
+
+                            </group>
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                        <field name="activity_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_vehicle_request_tree" model="ir.ui.view">
+            <field name="name">vehicle.request.tree</field>
+            <field name="model">vehicle.request</field>
+            <field name="arch" type="xml">
+
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="sequence"/>
+                    <field name="vehicle_id"/>
+                    <field name="period"/>
+                    <field name="rent_amount" optional="hide"/>
+                    <field name="from_date" optional="hide"/>
+                    <field name="to_date" optional="hide"/>
+                    <field name="state"/>
+
+
+                </tree>
+            </field>
+        </record>
+        <record id="view_vehicle_request_search" model="ir.ui.view">
+            <field name="name">vehicle.request.search</field>
+            <field name="model">vehicle.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="customer_id"/>
+                    <field name="sequence"/>
+                    <separator/>
+                    <filter string="Confirm" name="confirm" domain="[('state', '=', 'confirm')]"/>
+                    <filter string="Returned" name="returned" domain="[('state', '=', 'returned')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Customer" name="customer_id"
+                                context="{'group_by':'customer_id', 'residual_visible':True}"/>
+                        <filter string="State" name="state" context="{'group_by':'state', 'residual_visible':True}"/>
+
+                    </group>
+
+
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>
